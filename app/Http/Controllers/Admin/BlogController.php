@@ -79,7 +79,6 @@ class BlogController extends Controller
         $this->blogService->updateService($request->validated(),$blog);
         return back()->with('success','Blog updated successfully');
        }catch(\Throwable $th){
-        dd($th->getMessage());
         return back()->with('error',$th->getMessage());
        }
     }

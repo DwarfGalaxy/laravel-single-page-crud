@@ -72,6 +72,8 @@ class BlogService{
         }
     
         // update in db
-        $blog->update($request);
+        // $blog->update($request);
+        
+        Blog::where('id',$blog->id)->update($request);
     }
 }

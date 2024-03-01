@@ -47,17 +47,55 @@
 
     {{-- UPDATE/EDIT --}}
     @if (count($blogs)!=0)
-    @include('admin.blogs.edit')
+        @include('admin.blogs.edit')
     @endif
     {{-- end of UPDATE/EDIT --}}
 </div>
+@endsection
 
-{{-- to display current value in form for updation --}}
+@section('script')
 <script>
+    // to display current value in form for updation 
     function updateForm(blog) {
-        document.getElementById('updateTitle').value = blog['title'];
-        document.getElementById('updateSlug').value = blog['slug'];
-        document.getElementById('updateDescription').value = blog['description'];
+    document.getElementById('updateTitle').value = blog['title'];
+    document.getElementById('updateSlug').value = blog['slug'];
+    document.getElementById('updateDescription').value = blog['description'];
+    document.getElementById('updateForm').action = "{{ route('blogs.update', ['blog' => ':id']) }}".replace(':id', blog['id']);
+}
+
+
+    // Empty input fields and error message when modal closed for CREATION and UPDATION 
+    function clearForm(){
+        document.getElementById('title').value = '';
+        document.getElementById('slug').value = '';
+        document.getElementById('description').value = '';
+        document.querySelectorAll('.error-msg').forEach(function(element) {
+             element.innerText = '';
+        });
     }
+    
+    //Empty input fields and error message when modal closed for CREATION
+    document.getElementById("addBlogs").addEventListener("hidden.bs.modal",()=> clearForm());
+
+    // Empty input fields and error message when modal closed for UPDATION
+    document.getElementById('updateBlogs').addEventListener("hidden.bs.modal", function(){
+        clearForm();
+    });
+       
 </script>
+
+{{-- if error occurs while updation and creation then reopen modal --}}
+@if($errors->any())
+    @if(old('form_type') == 'update')
+        <script>
+            var myEditModal = new bootstrap.Modal(document.getElementById('updateBlogs'));
+            myEditModal.show();
+        </script>
+    @else
+        <script>
+            var myCreateModal = new bootstrap.Modal(document.getElementById('addBlogs'));
+            myCreateModal.show();
+        </script>
+    @endif
+@endif
 @endsection

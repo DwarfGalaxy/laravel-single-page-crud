@@ -19,7 +19,7 @@
                          <label for="title" class="form-label">Title</label>
                          <input type="text" class="form-control" id="title" name="title" value="{{old('title')}}">
                          @if ($errors->has('title'))
-                         <span class="text-danger">{{$errors->first('title')}}</span>
+                         <span class="text-danger error-msg">{{$errors->first('title')}}</span>
                          @endif
                      </div>
                      {{-- slug --}}
@@ -27,7 +27,7 @@
                          <label for="slug" class="form-label">slug</label>
                          <input type="text" class="form-control" id="slug" name="slug" value="{{old('slug')}}">
                          @if ($errors->has('slug'))
-                         <span class="text-danger">{{$errors->first('slug')}}</span>
+                         <span class="text-danger error-msg">{{$errors->first('slug')}}</span>
                          @endif
                      </div>
                      {{-- description --}}
@@ -35,7 +35,7 @@
                          <label for="description" class="form-label">Description</label>
                          <textarea class="form-control" id="description" name="description">{{old('description')}}</textarea>
                          @if ($errors->has('description'))
-                         <span class="text-danger">{{$errors->first('description')}}</span>
+                         <span class="text-danger error-msg">{{$errors->first('description')}}</span>
                          @endif
                      </div>
                      {{-- image --}}
@@ -43,7 +43,7 @@
                          <label for="image" class="form-label">image</label>
                          <input type="file" class="form-control" name="image" id="image">
                          @if ($errors->has('image'))
-                         <span class="text-danger">{{$errors->first('image')}}</span>
+                         <span class="text-danger error-msg">{{$errors->first('image')}}</span>
                          @endif
                      </div>
              </div>
@@ -56,22 +56,3 @@
      </div>
  </div>
 
- @section('script')
- @if($errors->any())
- <script>
-     var myModal = new bootstrap.Modal(document.getElementById('addBlogs'));
-     myModal.show();
-
- </script>
- @endif
-
- {{-- call method when modal closed to empty input fields--}}
- <script>
-     document.getElementById("addBlogs").addEventListener("hidden.bs.modal", function() {
-         document.getElementById('title').value = '';
-         document.getElementById('slug').value = '';
-         document.getElementById('description').value = '';
-     });
-
- </script>
- @endsection
